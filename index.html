@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gataca – Live Longer Through Peak Performance</title>
+
+<!-- Fonts + icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<style>
+/* =========================================================
+   DESIGN TOKENS – change colours / fonts / radii here
+   ========================================================= */
+:root{
+  --font: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --ink: #0a0a0a;
+  --muted: #3a3a3a;
+  --page: #ffffff;
+  --card: #f2f2f2;          /* product + story cards (matches product photo bg) */
+  --label: #e6ddd3;         /* goal card labels */
+  --dark: #000000;          /* PM stack card */
+  --blue: #175e8c;        /* standards card */
+  --hero-top: #f3eadb;      /* hero gradient */
+  --hero-bottom: #9fb1ad;
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --pad: 24px;              /* side gutter */
+  --maxw: 1120px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--font);color:var(--ink);background:var(--page);line-height:1.35;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 12px}
+section{margin-top:44px}
+
+/* Section heading row: "Explore by goal  →" */
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--pad) 0 calc(var(--pad) + 4px);margin-bottom:18px}
+.sec-head h2{font-size:clamp(26px,7vw,40px);font-weight:400;line-height:1.05;letter-spacing:-.02em}
+.sec-head h2 b{font-weight:600}
+.sec-head .arrow{font-size:22px;flex:none}
+
+/* ---------- Header / hero banner ---------- */
+.banner{position:relative;border-radius:var(--radius-md) var(--radius-md) 0 0;overflow:hidden;margin-top:8px;background:#1b2a3a}
+.banner img{width:100%;aspect-ratio:942/401;object-fit:cover}
+.nav{position:absolute;top:8px;left:11px;right:9px;height:34px;background:#fff;border-radius:10px;
+     display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:20px}
+.nav .right{display:flex;gap:12px}
+
+.hero{background:linear-gradient(180deg,var(--hero-top) 0%,#d9d2c4 55%,var(--hero-bottom) 100%);
+      border-radius:0 0 var(--radius-md) var(--radius-md);overflow:hidden;padding-bottom:28px}
+.hero img{width:100%;aspect-ratio:942/560;object-fit:cover}
+.hero .copy{padding:0 var(--pad) 0 calc(var(--pad) + 2px);margin-top:-8px}
+.hero h1{font-size:clamp(30px,8.4vw,52px);font-weight:600;line-height:1.05;letter-spacing:-.03em}
+.hero p{font-size:clamp(14px,3.6vw,18px);margin:12px 0 18px;max-width:30ch;color:var(--muted)}
+.btn{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:12px 26px;font-weight:500;font-size:16px;letter-spacing:-.01em}
+
+/* ---------- Horizontal scrollers (goals, testimonials, blog) ---------- */
+.scroller{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 0 8px 0;scrollbar-width:none}
+.scroller::-webkit-scrollbar{display:none}
+.scroller > *{scroll-snap-align:start;flex:none}
+
+.goal{position:relative;width:min(160px,44vw);border-radius:var(--radius-md);overflow:hidden}
+.goal img{width:100%;aspect-ratio:480/638;object-fit:cover}
+/* label sits exactly over the label baked into the mockup photo – swap photos and it still works */
+.goal span{position:absolute;left:12%;right:12%;top:71%;bottom:7.5%;display:grid;place-items:center;text-align:center;
+           background:var(--label);border-radius:10px;font-size:14px;line-height:1.1;padding:4px 8px}
+.goal:nth-child(2) span{left:14%;right:1%}
+
+/* ---------- Products ---------- */
+.products{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 2px}
+.product{position:relative;background:var(--card);border-radius:var(--radius-lg);padding:34px 12px 22px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.product .tag{position:absolute;top:10px;left:10px;background:var(--ink);color:#fff;font-size:11px;font-weight:500;padding:3px 11px;border-radius:999px}
+.product h3{font-size:clamp(15px,4.2vw,20px);font-weight:600;line-height:1.05;letter-spacing:-.02em;min-height:2.1em}
+.product img{width:72%;margin:10px 0 14px}
+.product .shop{background:#fff;border-radius:999px;padding:7px 18px;font-size:13px;font-weight:600}
+.product .price{font-size:12px;margin-top:14px;color:var(--muted)}
+/* rating + USP list (as on gataca.in product cards) */
+.product .rating{display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--muted);margin-top:6px}
+.product .rating i{color:#f58b3b;font-size:13px}
+.product .rating b{color:var(--ink);font-weight:600}
+.product .rating .sep{color:#bbb}
+.product .rating .new{background:#fff;border-radius:999px;padding:1px 8px;font-weight:500;color:var(--ink)}
+.product .usps{list-style:none;text-align:left;width:100%;max-height:7.4em;overflow-y:auto;margin:0 0 14px;padding-right:4px;
+  font-size:11px;line-height:1.3;color:#222;scrollbar-width:thin;scrollbar-color:#bbb transparent}
+.product .usps li{display:flex;gap:5px;align-items:flex-start;padding:2px 0}
+.product .usps i{font-size:12px;flex:none;margin-top:1px}
+.product .shop{margin-top:auto}
+
+/* ---------- Sam's stacks ---------- */
+.stacks h2{font-size:clamp(26px,7vw,40px);font-weight:400;line-height:1.05;letter-spacing:-.02em;padding:0 var(--pad) 0 calc(var(--pad) + 4px);margin-bottom:8px}
+.stacks h2 em{font-style:italic}
+.stacks h2 b{font-weight:600}
+.sam{width:100%;padding:0 2px}
+.stack-card{border-radius:var(--radius-lg);text-align:center;padding:34px 20px 22px;margin-top:20px;overflow:hidden}
+.stack-card.am{background:#fff;box-shadow:0 10px 40px -18px rgba(0,0,0,.18)}
+.stack-card.pm{background:var(--dark);color:#fff}
+.stack-card .icon{font-size:44px;line-height:1}
+.stack-card h3{font-size:clamp(30px,8vw,44px);font-weight:400;letter-spacing:-.02em;margin:4px 0 6px}
+.stack-card .outline{display:inline-block;border:1.5px solid currentColor;border-radius:12px;padding:5px 16px;font-weight:600;font-size:17px}
+.stack-card img{margin:12px auto 0;width:78%}
+.stack-card.pm img{width:62%}
+
+/* ---------- Testimonials ---------- */
+.testi{position:relative;width:min(156px,44vw);border-radius:var(--radius-md);overflow:hidden}
+.testi img{width:100%;aspect-ratio:468/775;object-fit:cover}
+.testi span{position:absolute;top:10px;left:13px;background:#000;color:#fff;font-size:11px;font-weight:500;padding:3px 9px}
+
+/* ---------- Our goal / story ---------- */
+.eyebrow{font-size:16px;padding:0 0 4px calc(var(--pad) + 4px)}
+.eyebrow b{font-weight:600}
+.story-card{background:var(--card);border-radius:var(--radius-lg);overflow:hidden;margin:0 2px}
+.story-card img{width:100%;aspect-ratio:897/660;object-fit:cover;border-radius:var(--radius-lg)}
+.story-card .body{padding:36px 34px 46px;font-size:clamp(13px,3.5vw,16px);color:#222}
+.story-card .body p + p{margin-top:12px}
+
+/* ---------- Standards ---------- */
+.standard{background:var(--blue);color:#fff;border-radius:var(--radius-lg);overflow:hidden;text-align:center;margin:0 6px}
+.standard h3{font-size:clamp(17px,4.6vw,24px);font-weight:600;letter-spacing:-.02em;padding:30px 20px 10px}
+.standard p{font-size:clamp(13px,3.5vw,17px);line-height:1.2;max-width:17em;margin:0 auto;letter-spacing:-.02em}
+.standard p + p{margin-top:16px}
+.standard img{width:100%;margin-top:18px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 45%);mask-image:linear-gradient(180deg,transparent 0,#000 45%)}
+
+/* ---------- Podcast ---------- */
+.podcast{display:block;border-radius:var(--radius-md);overflow:hidden;margin:0 6px}
+.podcast img{width:100%;aspect-ratio:881/468;object-fit:cover}
+
+/* ---------- Blog ---------- */
+.blog .scroller{padding-left:6px}
+.post{width:min(232px,64vw)}
+.post img{width:100%;aspect-ratio:695/457;object-fit:cover;border-radius:var(--radius-md)}
+.post .read{display:inline-block;border:1px solid #333;border-radius:8px;font-size:11px;padding:6px 10px;margin:18px 0 18px}
+.post h4{font-size:clamp(17px,4.6vw,21px);font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.post p{font-size:13px;margin:14px 0 18px;color:var(--muted)}
+.post a{font-size:14px;border-bottom:1px solid currentColor}
+
+/* ---------- Footer: black rounded card, same black as the PM Stack card ---------- */
+.site-foot{margin:56px 0 12px;background:var(--dark);color:#fff;border-radius:var(--radius-lg);padding:32px 22px 22px}
+.site-foot a{color:inherit}
+.site-foot h3{font-size:20px;font-weight:400;letter-spacing:-.01em;margin-bottom:10px}
+.site-foot h3 b{font-weight:600}
+.site-foot p{font-size:13px;line-height:1.5;color:#bdbdbd}
+.foot-grid{display:flex;flex-direction:column;gap:30px}
+.foot-logo{display:block;font-size:30px;font-weight:500;letter-spacing:.02em;margin-bottom:22px}
+.foot-sub h3{font-size:clamp(24px,6.6vw,30px);line-height:1.05;letter-spacing:-.02em}
+.foot-form{display:flex;gap:6px;margin-top:18px;background:#1c1c1c;border-radius:999px;padding:5px}
+.foot-form input{flex:1;min-width:0;background:none;border:0;color:#fff;font:inherit;font-size:14px;padding:0 14px;outline:none}
+.foot-form input::placeholder{color:#8a8a8a}
+.foot-form button{display:flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border-radius:999px;padding:10px 18px;font-weight:600;font-size:14px}
+.foot-form:focus-within{box-shadow:0 0 0 1px #fff}
+.foot-form[hidden]{display:none}
+.foot-ok{margin-top:18px;color:#fff !important;font-size:14px !important}
+.foot-terms{margin-top:12px;font-size:11px !important}
+.foot-terms a{text-decoration:underline;text-underline-offset:2px}
+.foot-about p + p{margin-top:10px}
+.foot-links ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.foot-links a{font-size:14px;color:#e6e6e6}
+.foot-links a:hover,.foot-terms a:hover{color:#fff;text-decoration:underline}
+.foot-base{margin-top:30px;padding-top:18px;border-top:1px solid #262626;display:flex;flex-direction:column;gap:10px}
+.foot-base p{font-size:11px;color:#8a8a8a}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- FAQ accordion ---------- */
+.faq-list,.faq-col{display:flex;flex-direction:column;gap:10px}
+.faq-list{padding:0 2px}
+.faq-item{background:var(--card);border-radius:var(--radius-md);transition:background .2s}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 16px 16px 20px;font-weight:600;font-size:clamp(14px,3.8vw,17px);letter-spacing:-.01em;line-height:1.25}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-icon{flex:none;width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:15px;transition:transform .25s,background .2s,color .2s}
+.faq-item[open] .faq-icon{transform:rotate(45deg);background:var(--ink);color:#fff}
+.faq-item p{padding:0 20px 18px;font-size:clamp(13px,3.5vw,15px);line-height:1.5;color:var(--muted)}
+.faq-item summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:var(--radius-md)}
+
+/* =========================================================
+   TABLET (768px+) – same mobile design, more room
+   ========================================================= */
+@media (min-width:768px){
+  :root{--pad:16px}
+  .wrap{padding:0 16px}
+  section{margin-top:64px}
+  .products{grid-template-columns:repeat(4,1fr);gap:14px}
+  .goal,.testi{width:230px}
+  .post{width:320px}
+  .stack-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stack-pair .stack-card{margin-top:16px}
+  .sam{max-width:560px;margin:0 auto}
+  .standard,.podcast{max-width:760px;margin-left:auto;margin-right:auto}
+}
+
+/* =========================================================
+   DESKTOP (1024px+) – the mobile design laid out wide
+   ========================================================= */
+@media (min-width:1024px){
+  :root{--pad:8px;--radius-lg:32px;--radius-md:26px;--maxw:1680px}
+  .wrap{padding:0 clamp(20px,2.5vw,40px)}
+  section{margin-top:104px}
+  .sec-head{margin-bottom:28px}
+  .sec-head h2{font-size:48px}
+  .sec-head .arrow{font-size:30px}
+
+  /* header banner: shorter strip, logo kept in view */
+  /* banner + hero run edge to edge; --edge lines inner content up with the page content */
+  :root{--edge:calc(max(0px,(100vw - var(--maxw)) / 2) + clamp(20px,2.5vw,40px))}
+  .banner,.hero{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0}
+  .banner{margin-top:0}
+  .banner img{aspect-ratio:auto;height:clamp(340px,26vw,520px);object-position:50% 78%}
+  .nav{top:18px;left:var(--edge);right:var(--edge);height:58px;border-radius:14px;padding:0 24px;font-size:26px}
+  .nav .right{gap:22px}
+
+  /* hero: copy left, product shot right */
+  .hero{display:grid;grid-template-columns:1fr 1.15fr;align-items:center;padding-bottom:0;
+        background:linear-gradient(180deg,#fdf0dc 0%,#f6e3cb 50%,#fbf4e8 100%)}
+  .hero img{order:2;height:100%;aspect-ratio:auto;min-height:460px}
+  .hero .copy{order:1;margin:0;padding:56px 24px 56px calc(var(--edge) + 24px)}
+  .hero h1{font-size:60px}
+  .hero p{font-size:19px;margin:20px 0 32px}
+  .btn{font-size:18px;padding:15px 34px}
+
+  .scroller{gap:28px}
+  .goal,.testi{width:300px}
+  .goal span{font-size:18px;border-radius:14px}
+  .testi span{font-size:14px;top:16px;left:18px;padding:5px 12px}
+
+  /* products: one row of four */
+  .products{gap:20px}
+  .product{padding:56px 20px 32px}
+  .product .tag{top:18px;left:18px;font-size:13px;padding:5px 14px}
+  .product h3{font-size:24px}
+  .product img{width:62%;margin:18px 0 22px}
+  .product .shop{font-size:15px;padding:10px 26px}
+  .product .price{font-size:14px;margin-top:18px}
+  .product .rating{font-size:14px;margin-top:10px}
+  .product .rating i{font-size:16px}
+  .product .usps{font-size:14px;max-height:7.6em;margin-bottom:20px;padding:0 6px}
+  .product .usps i{font-size:15px}
+
+  /* Sam's stacks: same pieces as mobile, laid out wide.
+     Left: Sam breaking out of her grey card. Right: AM above PM (mobile order),
+     each card turned landscape – icon/title/Explore left, products right.
+     Rows 1fr/3fr split Sam's photo 25/75, so the cards line up with her grey card. */
+  .stacks{display:grid;grid-template-columns:5.4fr 6.6fr;grid-template-rows:auto 1fr 3fr;gap:0 24px}
+  .stacks h2{grid-column:1/-1;font-size:48px;margin-bottom:12px}
+  .sam{grid-column:1;grid-row:2 / span 2;align-self:end;max-width:none;margin:0}
+  .stack-pair{grid-column:2;grid-row:3;display:flex;flex-direction:column;gap:16px}
+  .stack-pair .stack-card{flex:1;margin-top:0;display:flex;align-items:center;gap:24px;padding:16px 40px;min-height:0}
+  .stack-text{flex:1;display:flex;flex-direction:column;align-items:center}
+  .stack-card .icon{font-size:42px}
+  .stack-card h3{font-size:42px;margin:0 0 10px}
+  .stack-card .outline{font-size:18px;padding:7px 22px}
+  .stack-pair .stack-card img{flex:1.3;min-width:0;width:100%;max-height:170px;margin:0;padding:0;object-fit:contain}
+}
+@media (min-width:1024px) and (max-width:1279px){
+  .stack-pair .stack-card{padding:10px 28px;gap:16px}
+  .stack-card .icon{font-size:32px}
+  .stack-card h3{font-size:32px;margin:0 0 8px}
+  .stack-card .outline{font-size:15px;padding:5px 16px}
+  .stack-pair .stack-card img{max-height:120px}
+}
+@media (min-width:1024px){
+  /* our goal: photo left, story right */
+  .eyebrow{font-size:20px}
+  .story-card{display:grid;grid-template-columns:1.1fr 1fr;align-items:center}
+  .story-card img{height:100%;aspect-ratio:auto;object-position:left center}
+  .story-card .body{padding:56px 64px;font-size:18px}
+  .story-card .body p + p{margin-top:16px}
+
+  /* standards + podcast: centred features */
+  /* Standards + Podcasts side by side. Subgrid lines up both headings (row 1)
+     and both cards (row 2), so the blue card matches the podcast thumbnail's height. */
+  .duo{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;column-gap:24px;margin-top:104px}
+  .duo > section{display:grid;grid-row:span 2;grid-template-rows:subgrid;margin-top:0}
+  .duo .sec-head{align-self:start}
+  .duo .sec-head h2 br{display:none}   /* both headings on one line, facing each other */
+  .standard{max-width:none;margin:0;display:flex;flex-direction:column}
+  .standard h3{font-size:30px;padding:40px 40px 10px}
+  .standard p{font-size:18px;max-width:22em}
+  .standard img{flex:none;height:auto;margin-top:auto;padding-top:10px}   /* full hand creative, no crop */
+  .podcast{max-width:none;margin:0;align-self:stretch}
+  .podcast img{height:100%;aspect-ratio:auto;object-position:22% center}   /* fills the row; trims a little from the right, keeps the headline */
+
+  /* two-card rows: heading on the left, cards fill the rest */
+  .split{display:grid;grid-template-columns:1fr 2fr;gap:0 40px;align-items:start}
+  .split .sec-head{flex-direction:column;align-items:flex-start;gap:28px;padding-top:12px}
+  .split .scroller{display:grid;grid-template-columns:1fr 1fr;gap:28px;overflow:visible;padding:0}
+  .split .scroller{width:100%;max-width:880px;justify-self:end}
+  .split .testi,.split .post{width:auto}
+
+  /* goals: heading on top, all six cards in one row */
+  /* goals + testimonials: bigger cards in a swipeable row, ~4.3 visible so the next one peeks (as on mobile) */
+  .goals .scroller,.testis .scroller{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+  .goals .goal,.testis .testi{flex:0 0 calc((100% - 4 * 24px) / 4.3);width:auto}
+  .goals .goal:nth-child(2) span{left:12%;right:12%}
+
+  /* testimonials: same as mobile – heading on top, cards in one row */
+
+
+  /* blog: same as mobile – heading on top, posts in one row */
+  .blog .scroller{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;overflow:visible;padding-left:0}
+  .blog .post{width:auto;display:flex;flex-direction:column}
+  .blog .post > a{margin-top:auto;align-self:flex-start}
+  .blog .post .read{align-self:flex-start}
+  .blog .scroller{padding-left:0}
+
+  .hero img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%)}
+  .post .read{font-size:13px}
+  .post h4{font-size:24px}
+  .post p{font-size:15px}
+  .post a{font-size:16px}
+  .site-foot{margin:104px 0 20px;padding:56px 56px 32px;border-radius:32px}
+  .site-foot h3{font-size:22px;margin-bottom:14px}
+  .site-foot p{font-size:15px}
+  .foot-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:56px}
+  .foot-logo{font-size:40px;margin-bottom:28px}
+  .foot-sub h3{font-size:40px}
+  .foot-form{max-width:460px;margin-top:24px}
+  .foot-form input{font-size:16px}
+  .foot-form button{font-size:15px;padding:12px 22px}
+  .foot-terms{font-size:12px !important}
+  .foot-links a{font-size:16px}
+  .foot-links ul{gap:12px 24px}
+  .foot-base{margin-top:48px;padding-top:22px;flex-direction:row;justify-content:space-between;align-items:flex-end;gap:40px}
+  .foot-base p{font-size:13px}
+  .foot-disc{max-width:640px}
+}
+
+/* =========================================================
+   MENU DRAWER (hamburger) - mirrors the gataca.in mobile menu
+   ========================================================= */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;z-index:90}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:min(86vw,376px);background:#fff;z-index:100;transform:translateX(-100%);visibility:hidden;
+        transition:transform .35s cubic-bezier(.2,.7,.2,1),visibility .35s;display:flex;flex-direction:column;overflow:hidden}
+body.menu-open .drawer{transform:none;visibility:visible}
+body.menu-open .drawer-overlay{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+.drawer__head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 0 14px}
+.drawer__pill{width:200px;height:50px;border-radius:999px;object-fit:cover}
+.drawer__close{font-size:22px;width:36px;height:36px;display:grid;place-items:center}
+.drawer__panels{position:relative;flex:1;overflow:hidden}
+.panel{position:absolute;inset:0;background:#fff;overflow-y:auto;padding:14px 14px 20px;transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.panel.sub{transform:translateX(100%)}
+.panel.sub.is-open{transform:none}
+.panel.is-behind{transform:translateX(-24%)}
+.drawer__logo{display:block;font-size:30px;font-weight:500;letter-spacing:.02em;margin:10px 0 12px}
+.drawer ul{list-style:none}
+.drawer li > a,.drawer li > button{display:flex;width:100%;align-items:center;justify-content:space-between;padding:9px 0;font-size:16px;font-weight:500;text-align:left}
+.drawer li > a.strong{font-weight:600}
+.drawer li i{font-size:16px}
+.drawer__back{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600;padding:6px 0 14px;border-bottom:1px solid #eee;margin-bottom:8px;width:100%}
+.drawer__foot{padding:16px 14px 18px;display:flex;flex-direction:column;gap:18px;align-items:center;border-top:1px solid #f2f2f2}
+.drawer__region{display:flex;align-items:center;gap:6px;font-size:14px}
+.drawer__region .flag{width:18px;height:12px;border-radius:2px;background:linear-gradient(#f93 0 33%,#fff 33% 66%,#128807 66%)}
+.drawer__account{width:100%;background:#000;color:#fff;border-radius:999px;padding:12px;text-align:center;font-weight:600;font-size:15px}
+/* FAQ on desktop: heading on top as on mobile, questions in two columns */
+@media (min-width:1024px){
+  .faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;align-items:start}
+  .faq-col{gap:14px}
+  .faq-item summary{padding:22px 22px 22px 28px;font-size:19px}
+  .faq-item p{padding:0 28px 24px;font-size:16px}
+  .faq-icon{width:36px;height:36px;font-size:17px}
+}
+/* narrow laptops: keep the blue Standards card no taller than the podcast thumbnail */
+@media (min-width:1024px) and (max-width:1279px){
+  .standard h3{font-size:21px;padding:22px 24px 6px}
+  .standard p{font-size:14px}
+  .standard p + p{margin-top:8px}
+}
+@media (min-width:1024px){ .drawer{width:400px} .drawer li > a,.drawer li > button,.drawer__back{font-size:17px} }
+
+/* ---------- Edit mode toolbar (not part of the design) ---------- */
+.edit-bar{position:fixed;right:14px;bottom:14px;z-index:50;display:flex;gap:8px}
+.edit-bar button{background:#111;color:#fff;border-radius:999px;padding:9px 14px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.edit-bar button.on{background:#2e7d32}
+body.editing [data-editable]:hover{outline:1px dashed #2e7d32;outline-offset:2px}
+@media print{.edit-bar{display:none}}
+</style>
+</head>
+<body>
+<main class="wrap" data-editable>
+
+  <!-- ================= HEADER + HERO ================= -->
+  <header class="banner">
+    <img src="images/hero-banner.jpg" alt="Gataca – tortoise illustration">
+    <nav class="nav" aria-label="Main">
+      <button id="menuOpen" aria-label="Open menu" aria-controls="menuDrawer" aria-expanded="false"><i class="ph ph-list"></i></button>
+      <div class="right">
+        <button aria-label="Search"><i class="ph ph-magnifying-glass"></i></button>
+        <a href="#" aria-label="Cart"><i class="ph ph-shopping-cart-simple"></i></a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <img src="images/hero-products.jpg" alt="Gataca supplement range">
+    <div class="copy">
+      <h1>Live Longer Through Peak Performance</h1>
+      <p>Research-backed supplements, made at effective doses to help you feel and perform at your best.</p>
+      <a class="btn" href="#">Shop Now</a>
+    </div>
+  </div>
+
+  <!-- ================= EXPLORE BY GOAL ================= -->
+  <section class="goals">
+    <div class="sec-head"><h2><b>Explore</b> by goal</h2><a class="arrow" href="#" aria-label="See all goals"><i class="ph ph-arrow-right"></i></a></div>
+    <div class="scroller">
+      <a class="goal" href="#"><img src="images/goal-healthy-aging.jpg" alt=""><span>Healthy Aging</span></a>
+      <a class="goal" href="#"><img src="images/goal-metabolism.jpg" alt=""><span>Metabolism<br>&amp; Weight</span></a>
+      <!-- placeholder photos from Pinterest – replace with brand creatives -->
+      <a class="goal" href="#"><img src="images/goal-energy-focus.jpg" alt=""><span>Energy<br>&amp; Focus</span></a>
+      <a class="goal" href="#"><img src="images/goal-sleep-recovery.jpg" alt=""><span>Sleep<br>&amp; Recovery</span></a>
+      <a class="goal" href="#"><img src="images/goal-strength-performance.jpg" alt=""><span>Strength<br>&amp; Performance</span></a>
+      <a class="goal" href="#"><img src="images/goal-heart-health.jpg" alt=""><span>Heart Health</span></a>
+      <!-- add more goals: copy an <a class="goal"> block -->
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS ================= -->
+  <section>
+    <div class="sec-head"><h2>Research Backed<br><b>Supplements</b></h2><a class="arrow" href="#" aria-label="See all products"><i class="ph ph-arrow-right"></i></a></div>
+    <div class="products">
+      <article class="product">
+        <span class="tag">Bestseller</span>
+        <h3>Bisolve<br>Berberine</h3>
+        <div class="rating"><i class="ph-fill ph-star"></i><b>5.0</b><span class="sep">|</span>19 reviews</div>
+        <img src="images/product-bisolve-berberine.jpg" alt="Bisolve Berberine bottle">
+        <ul class="usps">
+          <li><i class="ph-fill ph-check-circle"></i>Supports healthy methylation</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports homocysteine metabolism</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports cardiovascular health</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports liver function</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports cellular metabolism</li>
+        </ul>
+        <a class="shop" href="#">Shop Now</a>
+        <div class="price">Starting at ₹1499</div>
+      </article>
+      <article class="product">
+        <h3>Trimethylglycine<br>(TMG)</h3>
+        <div class="rating"><i class="ph-fill ph-star"></i><b>4.89</b><span class="sep">|</span>18 reviews</div>
+        <img src="images/product-tmg.jpg" alt="TMG bottle">
+        <ul class="usps">
+          <li><i class="ph-fill ph-check-circle"></i>Supports methylation</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports your heart, liver &amp; brain health</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports homocysteine levels</li>
+        </ul>
+        <a class="shop" href="#">Shop Now</a>
+        <div class="price">Starting at ₹899</div>
+      </article>
+      <article class="product">
+        <h3>Super<br>Loop</h3>
+        <div class="rating"><span class="new">New</span></div>
+        <img src="images/product-super-loop.jpg" alt="Super Loop bottle">
+        <!-- not on gataca.in yet: USPs taken from the bottle label, no reviews shown -->
+        <ul class="usps">
+          <li><i class="ph-fill ph-check-circle"></i>Respiratory wellness</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports clearer and stronger lungs</li>
+        </ul>
+        <a class="shop" href="#">Shop Now</a>
+        <div class="price">Starting at ₹1499</div>
+      </article>
+      <article class="product">
+        <span class="tag">Soldout</span>
+        <h3>Iron<br>Bisglycinate</h3>
+        <div class="rating"><span class="new">New</span></div>
+        <img src="images/product-iron-bisglycinate.jpg" alt="Iron Bisglycinate bottle">
+        <!-- not on gataca.in yet: USPs taken from the bottle label, no reviews shown -->
+        <ul class="usps">
+          <li><i class="ph-fill ph-check-circle"></i>Supports healthy iron levels</li>
+          <li><i class="ph-fill ph-check-circle"></i>Supports radiant skin</li>
+        </ul>
+        <a class="shop" href="#">Shop Now</a>
+        <div class="price">Starting at ₹949</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= SAM'S STACKS ================= -->
+  <section class="stacks">
+    <h2><em>#Do<b>More</b></em> with<br><b>Sam’s Stacks</b></h2>
+    <img class="sam" src="images/sams-stacks.jpg" alt="Sam holding a Gataca bottle">
+    <div class="stack-pair">
+      <div class="stack-card am">
+        <div class="stack-text">
+          <i class="ph-light ph-sun-horizon icon"></i>
+          <h3>AM Stack</h3>
+          <a class="outline" href="#">Explore</a>
+        </div>
+        <img src="images/am-stack.jpg" alt="AM stack: Liposomal Vitamin C, Iron Bisglycinate, Clear Creatine">
+      </div>
+      <div class="stack-card pm">
+        <div class="stack-text">
+          <i class="ph-light ph-moon-stars icon"></i>
+          <h3>PM Stack</h3>
+          <a class="outline" href="#">Explore</a>
+        </div>
+        <img src="images/pm-stack.jpg" alt="PM stack: Super Loop, Trans Resveratrol">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="testis" id="testimonials">
+    <div class="sec-head"><h2><b>Testimonials</b></h2><a class="arrow" href="#" aria-label="See all testimonials"><i class="ph ph-arrow-right"></i></a></div>
+    <div class="scroller" style="padding-left:2px">
+      <a class="testi" href="#"><img src="images/testimonial-1.jpg" alt=""><span>@preeti_2</span></a>
+      <a class="testi" href="#"><img src="images/testimonial-2.jpg" alt=""><span>@juverlya.3</span></a>
+      <!-- placeholder photos from Pinterest + placeholder handles – replace with real customer content -->
+      <a class="testi" href="#"><img src="images/testimonial-3.jpg" alt=""><span>@customer_3</span></a>
+      <a class="testi" href="#"><img src="images/testimonial-4.jpg" alt=""><span>@customer_4</span></a>
+      <a class="testi" href="#"><img src="images/testimonial-5.jpg" alt=""><span>@customer_5</span></a>
+      <a class="testi" href="#"><img src="images/testimonial-6.jpg" alt=""><span>@customer_6</span></a>
+    </div>
+  </section>
+
+  <!-- ================= OUR GOAL ================= -->
+  <section>
+    <div class="eyebrow">Our <b>Goal</b></div>
+    <div class="sec-head"><h2><b>Live Longer Through<br>Peak Performance</b></h2><a class="arrow" href="#" aria-label="Read more"><i class="ph ph-arrow-right"></i></a></div>
+    <div class="story-card">
+      <img src="images/peak-performance.jpg" alt="Runner – Performance Matters">
+      <div class="body">
+        <p>Remember that day! You woke up feeling all the energy in the world.</p>
+        <p>You did not procrastinate.</p>
+        <p>You dominated the tasks you set out to do and finally went to bed feeling you made the world a better place.</p>
+        <p>We’re being a bit dramatic, but you know what we are talking about.</p>
+        <p>You performed at your peak!</p>
+        <p>Now imagine a whole week like that, a year or a lifetime like that day!</p>
+        <p>Peak performance matters and the only way to achieve this is by driving your body with the right mix of fuels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Standards + Podcasts: stacked on mobile, side by side on desktop -->
+  <div class="duo">
+  <!-- ================= STANDARDS ================= -->
+  <section>
+    <div class="sec-head"><h2>The <b>Gataca</b> <br>Standards</h2><a class="arrow" href="#" aria-label="Our standards"><i class="ph ph-arrow-right"></i></a></div>
+    <div class="standard">
+      <h3>Research backed</h3>
+      <p>All our supplements are backed by years of research and data.</p>
+      <p>We formulate solely with effective dosage and results in mind.</p>
+      <img src="images/standards-hand.jpg" alt="Capsule held between fingers">
+    </div>
+  </section>
+
+  <!-- ================= PODCASTS ================= -->
+  <section>
+    <div class="sec-head"><h2><b>Podcasts</b> to know more</h2><a class="arrow" href="#" aria-label="All podcasts"><i class="ph ph-arrow-right"></i></a></div>
+    <a class="podcast" href="#"><img src="images/podcast.jpg" alt="This explains why metabolic health is declining"></a>
+  </section>
+  </div>
+
+  <!-- ================= BLOG ================= -->
+  <section class="blog">
+    <div class="sec-head"><h2><b>Blog</b></h2></div>
+    <div class="scroller">
+      <article class="post">
+        <img src="images/blog-1.jpg" alt="">
+        <span class="read">7 MIN READ</span>
+        <h4>Berberine, explained: what it is and who it’s for</h4>
+        <p>A plain-English guide to berberine: where it comes from, what the research looks at, and how to take it.</p>
+        <a href="#">Read More</a>
+      </article>
+      <article class="post">
+        <img src="images/blog-2.jpg" alt="">
+        <span class="read">5 MIN READ</span>
+        <h4>How to build a supplement stack that fits your day</h4>
+        <p>Morning or night, with food or without: a simple way to plan what you take and when.</p>
+        <a href="#">Read More</a>
+      </article>
+      <!-- placeholder posts + Pinterest photos (also blog-2.jpg) – replace with real articles -->
+      <article class="post">
+        <img src="images/blog-3.jpg" alt="">
+        <span class="read">6 MIN READ</span>
+        <h4>Creatine 101: what it is and how to take it</h4>
+        <p>Loading phases, daily doses and timing: the basics of creatine, explained without the gym jargon.</p>
+        <a href="#">Read More</a>
+      </article>
+      <article class="post">
+        <img src="images/blog-4.jpg" alt="">
+        <span class="read">4 MIN READ</span>
+        <h4>Building an evening routine for better sleep</h4>
+        <p>Small habits for the last hour of your day, and where your PM stack fits in.</p>
+        <a href="#">Read More</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= FAQ (copy from gataca.in "For the avidly curious") ================= -->
+  <section class="faq">
+    <div class="eyebrow"><b>FAQs</b></div>
+    <div class="sec-head"><h2>For the <b>avidly curious</b></h2></div>
+    <div class="faq-list">
+      <div class="faq-col">
+          <details class="faq-item"><summary>What is Gataca's Primary Focus?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>Gataca's primary focus is providing innovative performance and longevity supplements to India &amp; Products that support cellular health, energy and healthy aging. Gataca aims to empower individuals to unlock their full potential for a vibrant, long life.</p></details>
+          <details class="faq-item"><summary>How is Gataca different from other brands?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>Unlike many brands, Gataca specializes in high purity performance and longevity supplements. Our unwavering commitment to quality and a holistic approach to well-being sets us apart as a premier supplements company in India</p></details>
+          <details class="faq-item"><summary>Is Gataca India's first longevity company?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>While Gataca may not be the absolute first longevity company in India, they are certainly among the pioneers in offering a thoughtfully curated range of performance and Longevity Products in India.</p></details>
+          <details class="faq-item"><summary>Do NMN supplements really work?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>Yes, NMN supplements have been shown to be effective in various scientific studies. NMN is a precursor to NAD+, an essential coenzyme involved in cellular energy production and metabolism. By increasing NAD+ levels, NMN supplements can support cellular health and healthy aging.</p></details>
+          <details class="faq-item"><summary>Does NMN stop aging?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>While NMN Supplements India does not completely stop the aging process, it has been shown to support healthy aging and longevity through its ability to increase NAD+ levels and promote cellular repair and rejuvenation. By increasing NAD+ levels, NMN can help maintain cellular health, improve mitochondrial function, and potentially slow down certain aspects of aging-related decline.</p></details>
+      </div>
+      <div class="faq-col">
+          <details class="faq-item"><summary>Can I take NMN products at night?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>It is not recommended that you take NMN at night. Depending on your goals, NMN can be taken at various times during the day. It is not recommended to take NMN in the evenings or at night as it can have a negative influence on your sleep cycle.</p></details>
+          <details class="faq-item"><summary>How to Order Gataca’s supplements?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>To order Gataca's performance &amp; longevity supplements online in India you can visit our official website and buy our collection of products.</p></details>
+          <details class="faq-item"><summary>Can I have these supplements with my medications?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>It's always best to consult with your healthcare specialist before taking any new supplements, if you are currently on medications. Some supplements may interact with certain medications, and your doctor can advise you on the safety and potential interactions based on your specific health condition and medication regimen.</p></details>
+          <details class="faq-item"><summary>How can I achieve healthy aging &amp; longevity?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>To achieve healthy aging and longevity, a multifaceted approach is recommended. This includes maintaining a balanced diet, regular exercise, proper stress management, and supplementing with high-quality products like Gataca's range of products that support performance, cellular health and longevity. Additionally, staying mentally and socially active can contribute to overall well-being and longevity.</p></details>
+          <details class="faq-item"><summary>Is NMN just vitamin B3?<span class="faq-icon"><i class="ph ph-plus"></i></span></summary><p>No, NMN supplements is not the same as vitamin B3 (niacin). While both are related compounds and belong to the vitamin B3 family, NMN is a different form that serves as a direct precursor to NAD+ (nicotinamide adenine dinucleotide), a vital coenzyme involved in numerous cellular processes, including energy production and longevity pathways.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER (copy and links from the gataca.in footer) ================= -->
+  <footer class="site-foot">
+    <div class="foot-grid">
+      <div class="foot-sub">
+        <a class="foot-logo" href="https://gataca.in/">GATACA</a>
+        <h3><b>Subscribe</b> to our emails</h3>
+        <p>Be the first to know about new collections and exclusive offers.</p>
+        <!-- design only: the form does not send anywhere yet -->
+        <form class="foot-form" id="footSub" novalidate>
+          <label class="sr" for="footEmail">Email</label>
+          <input id="footEmail" type="email" placeholder="Email" autocomplete="email" required>
+          <button type="submit">Subscribe <i class="ph ph-arrow-right"></i></button>
+        </form>
+        <p class="foot-ok" id="footOk" hidden>Thanks, you're on the list.</p>
+        <p class="foot-terms">By subscribing, you agree to the <a href="https://gataca.in/policies/terms-of-service">Terms of Use</a> &amp; <a href="https://gataca.in/policies/privacy-policy">Privacy Policy</a>.</p>
+      </div>
+      <div class="foot-about">
+        <h3>About</h3>
+        <p>At GATACA, we are committed to empowering individuals across India to lead a healthier, performance focused, and a longer life.</p>
+        <p>To achieve this each of our products are meticulously researched, sourced and tested, to rejuvenate, energize, and support your journey toward a healthier, longer life.</p>
+      </div>
+      <nav class="foot-links" aria-label="Quick links">
+        <h3>Quick links</h3>
+        <ul>
+          <li><a href="https://gataca.in/blogs/news">Blogs</a></li>
+          <li><a href="https://gataca.in/pages/contact">Contact</a></li>
+          <li><a href="https://gataca.in/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://gataca.in/policies/refund-policy">Refund &amp; Subscription Policy</a></li>
+          <li><a href="https://gataca.in/policies/terms-of-service">Terms of Service</a></li>
+          <li><a href="https://gataca.in/policies/shipping-policy">Shipping Policy</a></li>
+          <li><a href="https://gataca.goaffpro.com">Affiliates</a></li>
+          <li><a href="https://gataca.in/pages/certifications">Certifications</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <p class="foot-disc">These statements haven’t been evaluated by the FDA. Everyone’s body is different—your benefits may vary depending on your age, lifestyle, genetics, and health.</p>
+      <p>© 2026 GATACA – Live Longer Through Peak Performance</p>
+    </div>
+  </footer>
+  <script>
+  /* footer subscribe: design-only confirmation */
+  document.getElementById('footSub').addEventListener('submit', function(e){
+    e.preventDefault();
+    var i = document.getElementById('footEmail');
+    if (!i.checkValidity()) { i.focus(); i.reportValidity(); return; }
+    this.hidden = true; document.getElementById('footOk').hidden = false;
+  });
+  </script>
+</main>
+
+<!-- ================= MENU DRAWER (opens from the hamburger) =================
+     Links point at the live gataca.in pages. Edit the lists below to change the menu. -->
+<div class="drawer-overlay" data-close-menu></div>
+<aside class="drawer" id="menuDrawer" aria-label="Menu" aria-hidden="true">
+  <div class="drawer__head">
+    <img class="drawer__pill" src="images/menu-pill.jpg" alt="">
+    <button class="drawer__close" data-close-menu aria-label="Close menu"><i class="ph ph-x"></i></button>
+  </div>
+
+  <div class="drawer__panels">
+    <!-- main panel -->
+    <nav class="panel" data-panel="main">
+      <a class="drawer__logo" href="https://gataca.in/">GATACA</a>
+      <ul>
+        <li><a href="https://gataca.in/">GATACA</a></li>
+        <li><button data-open-panel="shop">Shop <i class="ph ph-caret-right"></i></button></li>
+        <li><button data-open-panel="more">More <i class="ph ph-caret-right"></i></button></li>
+        <li><a class="strong" href="#testimonials" data-close-menu>What our customers say</a></li>
+      </ul>
+    </nav>
+
+    <!-- Shop submenu -->
+    <div class="panel sub" data-panel="shop">
+      <button class="drawer__back" data-back><i class="ph ph-caret-left"></i> Shop</button>
+      <ul>
+        <li><a href="https://gataca.in/collections/all">Shop all</a></li>
+        <li><a href="https://gataca.in/products/biosolve-berberine">BioSolve Berberine</a></li>
+        <li><a href="https://gataca.in/products/creatine">Clear Creatine</a></li>
+        <li><button data-open-panel="resveratrol">Trans-Resveratrol <i class="ph ph-caret-right"></i></button></li>
+        <li><a href="https://gataca.in/products/clear-creatine-taurine">Clear Creatine Taurine</a></li>
+        <li><a href="https://gataca.in/products/tmg-trimethylglycine">TMG</a></li>
+        <li><a href="https://gataca.in/products/liposomal-vitamin-c">Liposomal Vitamin C</a></li>
+      </ul>
+    </div>
+
+    <!-- Shop > Trans-Resveratrol submenu -->
+    <div class="panel sub" data-panel="resveratrol">
+      <button class="drawer__back" data-back><i class="ph ph-caret-left"></i> Trans-Resveratrol</button>
+      <ul>
+        <li><a href="https://gataca.in/products/trans-resveratrol">Lipo Trans-Resveratrol 375 mg</a></li>
+      </ul>
+    </div>
+
+    <!-- More submenu -->
+    <div class="panel sub" data-panel="more">
+      <button class="drawer__back" data-back><i class="ph ph-caret-left"></i> More</button>
+      <ul>
+        <li><a href="https://gataca.in/pages/about-us">About us</a></li>
+        <li><a href="https://gataca.in/blogs/news">Blogs</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="drawer__foot">
+    <button class="drawer__region"><span class="flag"></span> India (INR &#8377;) <i class="ph ph-caret-down"></i></button>
+    <a class="drawer__account" href="https://gataca.in/account">Account</a>
+  </div>
+</aside>
+
+<script>
+/* Menu drawer: open/close + sliding submenus (Shop, More, Trans-Resveratrol) */
+(function(){
+  var body = document.body, drawer = document.getElementById('menuDrawer'), opener = document.getElementById('menuOpen'), stack = [];
+  function panel(n){ return drawer.querySelector('[data-panel="' + n + '"]'); }
+  function resetPanels(){ stack = []; drawer.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('is-open', 'is-behind'); }); }
+  function openMenu(){ resetPanels(); body.classList.add('menu-open'); drawer.setAttribute('aria-hidden', 'false'); opener.setAttribute('aria-expanded', 'true'); drawer.querySelector('.drawer__close').focus(); }
+  function closeMenu(){ body.classList.remove('menu-open'); drawer.setAttribute('aria-hidden', 'true'); opener.setAttribute('aria-expanded', 'false'); }
+  opener.addEventListener('click', openMenu);
+  document.querySelectorAll('[data-close-menu]').forEach(function(el){ el.addEventListener('click', closeMenu); });
+  drawer.addEventListener('click', function(e){
+    var o = e.target.closest('[data-open-panel]'), b = e.target.closest('[data-back]');
+    if (o) {
+      var cur = stack.length ? panel(stack[stack.length - 1]) : panel('main');
+      cur.classList.add('is-behind');
+      panel(o.dataset.openPanel).classList.add('is-open');
+      stack.push(o.dataset.openPanel);
+    }
+    if (b && stack.length) {
+      panel(stack.pop()).classList.remove('is-open');
+      (stack.length ? panel(stack[stack.length - 1]) : panel('main')).classList.remove('is-behind');
+    }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu(); });
+})();
+</script>
+
+<script>
+/* Desktop: the arrow next to "Explore by goal" / "Testimonials" scrolls its row (back to the start at the end) */
+(function(){
+  document.querySelectorAll('.goals, .testis').forEach(function(sec){
+    var arrow = sec.querySelector('.sec-head .arrow'), row = sec.querySelector('.scroller');
+    if(!arrow || !row) return;
+    arrow.addEventListener('click', function(e){
+      if (row.scrollWidth <= row.clientWidth + 2) return;      // nothing to scroll: keep the link
+      e.preventDefault();
+      var atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+      row.scrollTo({ left: atEnd ? 0 : row.scrollLeft + row.clientWidth * 0.75, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+<!-- Edit mode: click "Edit text", type on the page, then "Save HTML" to download the updated file.
+     Delete this block (and .edit-bar CSS) when the page goes live. -->
+<div class="edit-bar" id="editBar">
+  <button id="editToggle">Edit text</button>
+  <button id="saveHtml">Save HTML</button>
+</div>
+<script>
+(function(){
+  var main=document.querySelector('[data-editable]'), t=document.getElementById('editToggle');
+  t.onclick=function(){
+    var on=!document.body.classList.contains('editing');
+    document.body.classList.toggle('editing',on);
+    main.contentEditable=on; t.classList.toggle('on',on); t.textContent=on?'Done editing':'Edit text';
+  };
+  document.getElementById('saveHtml').onclick=function(){
+    var was=document.body.classList.contains('editing');
+    if(was) t.click();
+    var html='<!doctype html>\n'+document.documentElement.outerHTML;
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    a.download='index.html'; a.click();
+  };
+  // stop links navigating while editing
+  document.addEventListener('click',function(e){ if(document.body.classList.contains('editing')&&e.target.closest('a')) e.preventDefault(); },true);
+})();
+</script>
+</body>
+</html>
