@@ -145,7 +145,7 @@ section{margin-top:44px}
 .post a{font-size:14px;border-bottom:1px solid currentColor}
 
 /* ---------- Footer: black rounded card, same black as the PM Stack card ---------- */
-.site-foot{margin:56px 0 12px;background:var(--dark);color:#fff;border-radius:var(--radius-lg);padding:32px 22px 22px}
+.site-foot{margin:56px calc(50% - var(--vw,100vw) / 2 + 8px) 8px;background:var(--dark);color:#fff;border-radius:var(--radius-lg);padding:32px 16px 20px}
 .site-foot a{color:inherit}
 .site-foot h3{font-size:20px;font-weight:400;letter-spacing:-.01em;margin-bottom:10px}
 .site-foot h3 b{font-weight:600}
@@ -211,8 +211,8 @@ section{margin-top:44px}
 
   /* header banner: shorter strip, logo kept in view */
   /* banner + hero run edge to edge; --edge lines inner content up with the page content */
-  :root{--edge:calc(max(0px,(100vw - var(--maxw)) / 2) + clamp(20px,2.5vw,40px))}
-  .banner,.hero{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0}
+  :root{--edge:calc(max(0px,(var(--vw,100vw) - var(--maxw)) / 2) + clamp(20px,2.5vw,40px))}
+  .banner,.hero{margin-left:calc(50% - var(--vw,100vw) / 2);margin-right:calc(50% - var(--vw,100vw) / 2);border-radius:0}
   .banner{margin-top:0}
   .banner img{aspect-ratio:auto;height:clamp(340px,26vw,520px);object-position:50% 78%}
   .nav{top:18px;left:var(--edge);right:var(--edge);height:58px;border-radius:14px;padding:0 24px;font-size:26px}
@@ -317,7 +317,7 @@ section{margin-top:44px}
   .post h4{font-size:24px}
   .post p{font-size:15px}
   .post a{font-size:16px}
-  .site-foot{margin:104px 0 20px;padding:56px 56px 32px;border-radius:32px}
+  .site-foot{margin:104px calc(50% - var(--vw,100vw) / 2 + 8px) 8px;padding:56px max(32px,calc(var(--edge) - 8px)) 32px;border-radius:32px}
   .site-foot h3{font-size:22px;margin-bottom:14px}
   .site-foot p{font-size:15px}
   .foot-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:56px}
@@ -378,6 +378,12 @@ body.menu-open{overflow:hidden}
 @media (min-width:1024px){ .drawer{width:400px} .drawer li > a,.drawer li > button,.drawer__back{font-size:17px} }
 
 </style>
+<script>
+/* --vw = page width without the scrollbar. Full-bleed parts (banner, hero, footer) use it so they
+   don't slide under the scrollbar and cause a sideways scroll. 100vw is the fallback. */
+(function(){ var d=document.documentElement; function vw(){ d.style.setProperty('--vw', d.clientWidth + 'px'); }
+  vw(); if (window.ResizeObserver) new ResizeObserver(vw).observe(d); else addEventListener('resize', vw); })();
+</script>
 </head>
 <body>
 <main class="wrap">

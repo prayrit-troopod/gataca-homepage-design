@@ -52,7 +52,7 @@ White page, generous spacing, soft `#f2f2f2` cards with large radii. The colour 
 - **Stack cards**: AM is white with a soft shadow; PM is black. Each has an icon, a large light title, an Explore button and the product group.
 - **FAQ item**: a grey rounded card with a bold question and a "+" in a white circle. When open, the circle turns black and the "+" rotates into an "×"; the answer sits below in muted text.
 - **Blog card**: rounded photo, outlined read-time chip, bold title, excerpt, underlined Read More.
-- **Footer**: a black rounded card (same black as the PM Stack card). GATACA wordmark, "**Subscribe** to our emails" with a dark pill email field and a white Subscribe pill, About, and Quick links in two columns, then the FDA disclaimer and copyright under a thin rule. Copy and links come from the gataca.in footer. The form is design-only: it shows a thank-you line and sends nothing.
+- **Footer**: a black rounded card (same black as the PM Stack card), 8px from the screen edges on every size. GATACA wordmark, "**Subscribe** to our emails" with a dark pill email field and a white Subscribe pill, About, and Quick links in two columns, then the FDA disclaimer and copyright under a thin rule. Copy and links come from the gataca.in footer. The form is design-only: it shows a thank-you line and sends nothing.
 
 ## Menu
 The hamburger opens a left drawer that mirrors the gataca.in mobile menu. It has GATACA, Shop, More and "What our customers say". Shop and More slide to their own panels with a back link, and Trans-Resveratrol has a third level. The footer holds the region picker and a black Account pill. The links point at the live gataca.in pages.
@@ -77,7 +77,7 @@ The content and order match the mobile design. Only the layout widens:
 - **Hero** splits in two: copy on the left, product shot on the right. The image fades in from the left.
 - **Testimonials** work the same way as Explore by goal: larger cards in a peeking row, scrolled by the heading arrow.
 - **Blog** matches mobile: heading on top, four posts in one row.
-- **Footer** puts Subscribe, About and Quick links in three columns, with the disclaimer on the left and the copyright on the right of the bottom row.
+- **Footer** runs almost edge to edge (8px from the screen sides), with its content lined up with the page. It puts Subscribe, About and Quick links in three columns, with the disclaimer on the left and the copyright on the right of the bottom row.
 - **FAQ** keeps its heading on top, with the questions in two fixed columns of five so opening one never moves the others.
 - **Explore by goal** shows larger cards in a sideways row, about 4.3 visible so the next one peeks in, as on mobile. The heading arrow scrolls the row.
 - **Products** sit in one row of four.
