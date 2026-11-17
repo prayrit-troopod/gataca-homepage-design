@@ -771,13 +771,14 @@ body.editing [data-editable]:hover{outline:1px dashed #2e7d32;outline-offset:2px
 </script>
 
 <!-- Edit mode: click "Edit text", type on the page, then "Save HTML" to download the updated file.
-     Delete this block (and .edit-bar CSS) when the page goes live. -->
+     The toolbar only shows when the file is opened locally (file:// or localhost); on the live site it is removed. -->
 <div class="edit-bar" id="editBar">
   <button id="editToggle">Edit text</button>
   <button id="saveHtml">Save HTML</button>
 </div>
 <script>
 (function(){
+  if(!(location.protocol==='file:'||/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))){ document.getElementById('editBar').remove(); return; }
   var main=document.querySelector('[data-editable]'), t=document.getElementById('editToggle');
   t.onclick=function(){
     var on=!document.body.classList.contains('editing');
